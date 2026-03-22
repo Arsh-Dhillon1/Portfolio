@@ -1,42 +1,85 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* ── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap');
+
+/* ── Font utility classes (used via className="font-display / font-mono") ─── */
+.font-display { font-family: 'Bebas Neue', sans-serif !important; }
+.font-mono    { font-family: 'DM Mono', monospace !important; }
+
+/* ── Base cursor hide ─────────────────────────────────────────────────────── */
+.portfolio-root, .portfolio-root * { cursor: none !important; font-family: 'DM Sans', sans-serif; }
+
+/* ── Custom cursor ────────────────────────────────────────────────────────── */
+.cursor-dot {
+  position: fixed; top: 0; left: 0;
+  width: 8px; height: 8px;
+  background: #a3e635; /* lime-400 */
+  border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transition: transform 0.05s linear;
+}
+.cursor-ring {
+  position: fixed; top: 0; left: 0;
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(163, 230, 53, 0.35);
+  border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transition: transform 0.14s cubic-bezier(0.16,1,0.3,1);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* ── Film grain overlay ───────────────────────────────────────────────────── */
+.grain-overlay {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  animation: grain-shift 0.5s steps(2) infinite;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* ── Ghost hero text ──────────────────────────────────────────────────────── */
+.hero-ghost-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(12rem, 26vw, 26rem);
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.03);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* ── Spinning ring on photo ───────────────────────────────────────────────── */
+.spin-slow {
+  animation: spin-slow 22s linear infinite;
 }
 
-.card {
-  padding: 2em;
+/* ── Keyframes ────────────────────────────────────────────────────────────── */
+@keyframes grain-shift {
+  0%  { transform: translate(0, 0); }
+  50% { transform: translate(-2%, -2%); }
 }
 
-.read-the-docs {
-  color: #888;
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Hero animations ──────────────────────────────────────────────────────── */
+.animate-hero {
+  animation: fade-up 0.9s cubic-bezier(0.16,1,0.3,1) both;
+}
+.animate-hero-img {
+  animation: fade-up 0.9s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Float scroll hint ────────────────────────────────────────────────────── */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50%     { transform: translateX(-50%) translateY(-8px); }
 }
